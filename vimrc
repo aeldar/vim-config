@@ -55,6 +55,15 @@ set hidden
 set history=1000
 set nrformats-=octal
 
+" File browsing (netrw)
+" Tweaks for browsing
+let g:netrw_banner=0        " disable annoying banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
 " Get the defaults that most users want.
 source $VIMRUNTIME/defaults.vim
 
@@ -78,6 +87,7 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
@@ -94,4 +104,27 @@ nmap ga <Plug>(EasyAlign)
 " ======== vim-code-dark ========
 colorscheme codedark
 let g:airline_theme = 'codedark'
+
+" ======== cursor color and shape for terminal =========
+if &term =~ "xterm\\|rxvt"
+  " 1 or 0 -> blinking block
+  " 2 -> solid block
+  " 3 -> blinking underscore
+  " 4 -> solid underscore
+  " 5 -> blinking vertical bar
+  " 6 -> solid vertical bar
+
+  " cursor color for Insert Mode
+  let &t_SI = "\<Esc>]12;orange\x7"
+  " cursor shape for Inser Mode
+  let &t_SI .= "\<Esc>[5 q"
+  " cursor color otherwise
+  let &t_EI = "\<Esc>]12;grey\x7"
+  " cursor shape otherwise
+  let &t_EI .= "\<Esc>[2 q"
+  " reset cursor color on exit
+  autocmd VimLeave * silent !echo -ne "\x1b]12;white\x7"
+  " reset cursor shape on exit
+  autocmd VimLeave * silent !echo -ne "\x1b[\x30 q"
+endif
 
