@@ -1,2 +1,8 @@
 .netrwhist
+# local temp dir
+/tmp
+# plug-vim plugin directory
+/plugged
+# plug.vim itself, as it is downloaded automatically (see vimrc)
+/autoload/plug.vim
 
