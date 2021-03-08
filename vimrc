@@ -28,7 +28,7 @@ set wrap
 set breakindent
 set showbreak=⤿\ \ \ 
 set textwidth=80
-set colorcolumn=81,101,121
+set colorcolumn=81,121
 
 " User interface
 set laststatus=2
@@ -62,6 +62,8 @@ set nrformats-=octal
 " disable modelines for security
 set modelines=0
 set nomodeline
+" look for file dir, then current dir, then any current subdir for files
+set path=.,,**
 
 " Directories
 set backupdir^=~/.vim/tmp/backup//
@@ -104,9 +106,18 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'tomtom/tcomment_vim'
 
+Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = [
+  \ 'coc-tsserver'
+  \ ]
 call plug#end()
 
 
