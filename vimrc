@@ -27,6 +27,8 @@ syntax enable
 set wrap
 set breakindent
 set showbreak=⤿\ \ \ 
+set textwidth=80
+set colorcolumn=81,101,121
 
 " User interface
 set laststatus=2
@@ -41,7 +43,10 @@ set visualbell
 set title
 set background=dark
 " unprintable characters
-set listchars=space:·,eol:¶,trail:~,extends:>,precedes:<,tab:>->
+set listchars=space:·,eol:¶,trail:·,extends:>,precedes:<,tab:>->
+" new window split directions
+set nosplitbelow
+set splitright
 
 " Code folding
 set foldmethod=indent
@@ -54,6 +59,17 @@ set backspace=indent,eol,start
 set hidden
 set history=1000
 set nrformats-=octal
+" disable modelines for security
+set modelines=0
+set nomodeline
+
+" Directories
+set backupdir^=~/.vim/tmp/backup//
+set directory^=~/.vim/tmp/swap//
+set undodir^=~/.vim/tmp//undo//
+set backupskip+=~/.vim/tmp/*
+set backup
+set writebackup
 
 " File browsing (netrw)
 " Tweaks for browsing
