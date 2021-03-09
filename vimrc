@@ -143,6 +143,9 @@ if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
   let g:coc_global_extensions += ['coc-eslint']
 endif
 
+" show docs on K
+nnoremap <silent> K :call CocAction('doHover')<CR>
+
 " ======== vim-code-dark ========
 colorscheme codedark
 let g:airline_theme = 'codedark'
