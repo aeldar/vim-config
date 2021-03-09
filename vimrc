@@ -47,6 +47,8 @@ set listchars=space:·,eol:¶,trail:·,extends:>,precedes:<,tab:>->
 " new window split directions
 set nosplitbelow
 set splitright
+" Give more space for displaying messages.
+set cmdheight=2
 
 " Code folding
 set foldmethod=indent
@@ -107,6 +109,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tomtom/tcomment_vim'
+Plug 'frazrepo/vim-rainbow'
 
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -115,9 +118,6 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = [
-  \ 'coc-tsserver'
-  \ ]
 call plug#end()
 
 
@@ -127,6 +127,21 @@ xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+" ======== vim-rainbow ========
+let g:rainbow_active = 1
+
+" ======== coc.nvim ========
+let g:coc_global_extensions = []
+if isdirectory('./node_modules') && isdirectory('./node_modules/typescript')
+  let g:coc_global_extensions += ['coc-tsserver']
+endif
+if isdirectory('./node_modules') && isdirectory('./node_modules/prettier')
+  let g:coc_global_extensions += ['coc-prettier']
+endif
+if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
+  let g:coc_global_extensions += ['coc-eslint']
+endif
 
 " ======== vim-code-dark ========
 colorscheme codedark
