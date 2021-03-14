@@ -1,3 +1,6 @@
+" Get the defaults that most users want.
+source $VIMRUNTIME/defaults.vim
+
 " Identation
 set autoindent
 set smarttab
@@ -75,6 +78,23 @@ set backupskip+=~/.vim/tmp/*
 set backup
 set writebackup
 
+" Default mapping
+let mapleader = ","
+let maplocalleader = "\\"
+inoremap jk <Esc>
+" disable defaults to train a better habit
+" the following <Esc> for insert mode is buggy, breaks arrows (at least).
+" TODO remove it when the habit of using jk is developed strong.
+noremap <Esc> <Esc>:echo "\<Esc\> in INSERT mode has been disabled to develope a good habit. Use jk instead."<CR>a
+inoremap <Left> <Esc>:echo "\<Left\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
+inoremap <Right> <Esc>:echo "\<Right\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
+inoremap <Up> <Esc>:echo "\<Up\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
+inoremap <Down> <Esc>:echo "\<Down\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
+nnoremap <Left> :echo "\<Left\> in NORMAL mode has been disabled to develope a good habit. Use h instead."<CR>
+nnoremap <Right> :echo "\<Right\> in NORMAL mode has been disabled to develope a good habit. Use l instead."<CR>
+nnoremap <Up> :echo "\<Up\> in NORMAL mode has been disabled to develope a good habit. Use k instead."<CR>
+nnoremap <Down> :echo "\<Down\> in NORMAL mode has been disabled to develope a good habit. Use j instead."<CR>
+
 " File browsing (netrw)
 " Tweaks for browsing
 let g:netrw_banner=0        " disable annoying banner
@@ -83,9 +103,6 @@ let g:netrw_altv=1          " open splits to the right
 let g:netrw_liststyle=3     " tree view
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
-
-" Get the defaults that most users want.
-source $VIMRUNTIME/defaults.vim
 
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -101,6 +118,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 " ======== vim-plug ========
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
+Plug 'guns/xterm-color-table.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'mattn/emmet-vim'
 Plug 'tomasiser/vim-code-dark'
@@ -110,6 +128,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tomtom/tcomment_vim'
 Plug 'frazrepo/vim-rainbow'
+Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
+Plug 'junegunn/fzf.vim'
 
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
@@ -164,7 +187,7 @@ if &term =~ "xterm\\|rxvt"
   " cursor shape for Inser Mode
   let &t_SI .= "\<Esc>[5 q"
   " cursor color otherwise
-  let &t_EI = "\<Esc>]12;grey\x7"
+  let &t_EI = "\<Esc>]12;white\x7"
   " cursor shape otherwise
   let &t_EI .= "\<Esc>[2 q"
   " reset cursor color on exit
