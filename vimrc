@@ -1,7 +1,8 @@
 " Get the defaults that most users want.
 source $VIMRUNTIME/defaults.vim
 
-" Identation
+" Settings ------------------------------ {{{settings
+" Identation ---------------------------- {{{
 set autoindent
 set smarttab
 set expandtab
@@ -9,18 +10,21 @@ set tabstop=2
 set shiftwidth=2
 set shiftround
 filetype plugin indent on
+" }}}
 
-" Search
+" Search -------------------------------- {{{
 set hlsearch
 set ignorecase
 set incsearch
 set smartcase
+" }}}
 
-" Performance
+" Performance --------------------------- {{{
 set complete-=i
 set lazyredraw
+" }}}
 
-" Text rendering
+" Text rendering ------------------------ {{{
 set display+=lastline
 set encoding=utf-8
 set linebreak
@@ -32,8 +36,9 @@ set breakindent
 set showbreak=⤿\ \ \ 
 set textwidth=80
 set colorcolumn=81,121
+" }}}
 
-" User interface
+" User interface ------------------------ {{{
 set laststatus=2
 set ruler
 set wildmenu
@@ -49,13 +54,15 @@ set listchars=space:·,eol:¶,trail:·,extends:>,precedes:<,tab:>-> " unprintabl
 set nosplitbelow " new window split directions
 set splitright
 set cmdheight=2 " more space for messages
+" }}}
 
-" Code folding
+" Code folding --------------------------- {{{
 set foldmethod=indent
 set foldnestmax=3
 set nofoldenable
+" }}}
 
-" Miscellaneous
+" Miscellaneous -------------------------- {{{
 set autoread
 set backspace=indent,eol,start
 set hidden
@@ -64,16 +71,19 @@ set nrformats-=octal
 set modelines=0 " disable modelines for security
 set nomodeline
 set path=.,,** " look for file dir, then current dir, then any current subdir for files
+" }}}
 
-" Directories
+" Directories ---------------------------- {{{
 set backupdir^=~/.vim/tmp/backup//
 set directory^=~/.vim/tmp/swap//
 set undodir^=~/.vim/tmp//undo//
 set backupskip+=~/.vim/tmp/*
 set backup
 set writebackup
+" }}}
+" settings}}}
 
-" Default mapping
+" Default mapping ----------------------------------- {{{
 let mapleader = ","
 let maplocalleader = "\\"
 inoremap jk <Esc>
@@ -89,28 +99,42 @@ nnoremap <Left> :echo "\<Left\> in NORMAL mode has been disabled to develope a g
 nnoremap <Right> :echo "\<Right\> in NORMAL mode has been disabled to develope a good habit. Use l instead."<CR>
 nnoremap <Up> :echo "\<Up\> in NORMAL mode has been disabled to develope a good habit. Use k instead."<CR>
 nnoremap <Down> :echo "\<Down\> in NORMAL mode has been disabled to develope a good habit. Use j instead."<CR>
+" }}}
 
-" File browsing (netrw)
-" Tweaks for browsing
+" File browsing (netrw) ------------------------------ {{{
 let g:netrw_banner=0        " disable annoying banner
 let g:netrw_browse_split=4  " open in prior window
 let g:netrw_altv=1          " open splits to the right
 let g:netrw_liststyle=3     " tree view
 let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+" }}}
 
-" Install vim-plug if not found
+" Vimscript file settings ---------------------------- {{{
+augroup filetype_vim
+  autocmd!
+  autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+
+" Install vim-plug if not found ---------------------- {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
+" }}}
 
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
+" Run PlugInstall if there are missing plugins ------- {{{
+augroup vim_plug_install_missing
+  autocmd!
+  autocmd VimEnter *
+    \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+    \|   PlugInstall --sync | source $MYVIMRC
+    \| endif
+augroup END
+" }}}
 
-" ======== vim-plug ========
+" vim-plug plugins ----------------------------------- {{{
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-sensible'
 Plug 'guns/xterm-color-table.vim'
@@ -137,19 +161,21 @@ Plug 'jparise/vim-graphql'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+" }}}
 
-
-" ======== easy-align ========
+" Plugins settings ------------------------ {{{plugins
+" Plugin easy-align ----------------------- {{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
-
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+" }}}
 
-" ======== vim-rainbow ========
+" Plugin vim-rainbow ---------------------- {{{
 let g:rainbow_active = 1
+" }}}
 
-" ======== coc.nvim ========
+" Plugin coc.nvim ------------------------- {{{
 let g:coc_global_extensions = []
 if isdirectory('./node_modules') && isdirectory('./node_modules/typescript')
   let g:coc_global_extensions += ['coc-tsserver']
@@ -160,15 +186,17 @@ endif
 if isdirectory('./node_modules') && isdirectory('./node_modules/eslint')
   let g:coc_global_extensions += ['coc-eslint']
 endif
-
 " show docs on K
 nnoremap <silent> K :call CocAction('doHover')<CR>
+" }}}
+" plugins}}}
 
-" ======== vim-code-dark ========
+" Theme vim-code-dark ---------------------- {{{
 colorscheme codedark
 let g:airline_theme = 'codedark'
+" }}}
 
-" ======== cursor color and shape for terminal =========
+" Terminal cursor color and shape ---------- {{{
 if &term =~ "xterm\\|rxvt"
   " 1 or 0 -> blinking block
   " 2 -> solid block
@@ -190,4 +218,5 @@ if &term =~ "xterm\\|rxvt"
   " reset cursor shape on exit
   autocmd VimLeave * silent !echo -ne "\x1b[\x30 q"
 endif
+" }}}
 
