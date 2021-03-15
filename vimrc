@@ -45,13 +45,10 @@ set noerrorbells
 set visualbell
 set title
 set background=dark
-" unprintable characters
-set listchars=space:·,eol:¶,trail:·,extends:>,precedes:<,tab:>->
-" new window split directions
-set nosplitbelow
+set listchars=space:·,eol:¶,trail:·,extends:>,precedes:<,tab:>-> " unprintable characters
+set nosplitbelow " new window split directions
 set splitright
-" Give more space for displaying messages.
-set cmdheight=2
+set cmdheight=2 " more space for messages
 
 " Code folding
 set foldmethod=indent
@@ -64,11 +61,9 @@ set backspace=indent,eol,start
 set hidden
 set history=1000
 set nrformats-=octal
-" disable modelines for security
-set modelines=0
+set modelines=0 " disable modelines for security
 set nomodeline
-" look for file dir, then current dir, then any current subdir for files
-set path=.,,**
+set path=.,,** " look for file dir, then current dir, then any current subdir for files
 
 " Directories
 set backupdir^=~/.vim/tmp/backup//
