@@ -99,6 +99,10 @@ nnoremap <Left> :echo "\<Left\> in NORMAL mode has been disabled to develope a g
 nnoremap <Right> :echo "\<Right\> in NORMAL mode has been disabled to develope a good habit. Use l instead."<CR>
 nnoremap <Up> :echo "\<Up\> in NORMAL mode has been disabled to develope a good habit. Use k instead."<CR>
 nnoremap <Down> :echo "\<Down\> in NORMAL mode has been disabled to develope a good habit. Use j instead."<CR>
+
+" open and apply vimrc configuration
+nnoremap <leader>ev :tabedit $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
 " }}}
 
 " File browsing (netrw) ------------------------------ {{{
