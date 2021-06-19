@@ -17,6 +17,6 @@ only once).
 
 Enjoy vim.
 
-By the way, arrow keys are disabled to cultivate proper vim habits,
-muh-ha-ha-haah-haaaah.
+By the way, arrow keys are disabled to cultivate proper vim habits.
+`ESC` key is also disabled, in favor of `jk` as a faster alternative, hehehe.
 
