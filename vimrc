@@ -34,7 +34,7 @@ syntax enable
 set wrap
 set breakindent
 set showbreak=⤿\ \ \ 
-set textwidth=80
+set textwidth=0
 set colorcolumn=81,121
 " }}}
 
