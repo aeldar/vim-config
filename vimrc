@@ -88,9 +88,9 @@ let mapleader = ","
 let maplocalleader = "\\"
 inoremap jk <Esc>
 " disable defaults to train a better habit
-" the following <Esc> for insert mode is buggy, breaks arrows (at least).
+" the following <Esc> for insert mode is buggy, breaks arrows and insertion (at least).
 " TODO remove it when the habit of using jk is developed strong.
-inoremap <Esc> <Esc>:echo "\<Esc\> in INSERT mode has been disabled to develope a good habit. Use jk instead."<CR>a
+" inoremap <Esc> <Esc>:echo "\<Esc\> in INSERT mode has been disabled to develope a good habit. Use jk instead."<CR>a
 inoremap <Left> <Esc>:echo "\<Left\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
 inoremap <Right> <Esc>:echo "\<Right\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
 inoremap <Up> <Esc>:echo "\<Up\> in INSERT mode has been disabled to develope a good habit. Instead, exit INSERT mode and move."<CR>a
