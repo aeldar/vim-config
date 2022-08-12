@@ -165,6 +165,10 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" plain text accounting 
+Plug 'ledger/vim-ledger'
+
 call plug#end()
 " }}}
 
