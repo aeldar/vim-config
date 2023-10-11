@@ -152,7 +152,8 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tomtom/tcomment_vim'
 Plug 'frazrepo/vim-rainbow'
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
+" disable auto-pairs as it highjacks some Copilot mappings
+" Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-gitgutter'
 Plug 'kevinoid/vim-jsonc'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  }
@@ -166,6 +167,9 @@ Plug 'jparise/vim-graphql'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
+" Github Copilot
+Plug 'github/copilot.vim'
+
 " plain text accounting 
 Plug 'ledger/vim-ledger'
 
@@ -173,6 +177,9 @@ call plug#end()
 " }}}
 
 " Plugins settings ------------------------ {{{plugins
+" Plugin copilot.vim --------------------- {{{
+inoremap <C-[> <Plug>(copilot-dismiss)
+inoremap <C-]> <Plug>(copilot-next)
 " Plugin easy-align ----------------------- {{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
