@@ -74,12 +74,22 @@ set path=.,,** " look for file dir, then current dir, then any current subdir fo
 " }}}
 
 " Directories ---------------------------- {{{
-set backupdir^=~/.vim/tmp/backup//
-set directory^=~/.vim/tmp/swap//
-set undodir^=~/.vim/tmp//undo//
+let &directory = expand('~/.vim/tmp/swap//')
+" set directory^=~/.vim/tmp/swap//
+let &backupdir = expand('~/.vim/tmp/backup//')
+" set backupdir^=~/.vim/tmp/backup//
+let &undodir = expand('~/.vim/tmp/undo//')
+" set undodir^=~/.vim/tmp//undo//
+
+" create directories if they don't exist
+if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
+if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
+if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
+
 set backupskip+=~/.vim/tmp/*
 set backup
 set writebackup
+set undofile
 " }}}
 " settings}}}
 
