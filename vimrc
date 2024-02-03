@@ -11,20 +11,23 @@ if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endi
 if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
 if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endif
 
-" some useful directories
+" some useful directories as env vars
 let $MY_VIM_TMP_DIR = $XDG_STATE_HOME."/vim/tmp"
 let $MY_VIM_DATA_DIR = $XDG_DATA_HOME."/vim"
 let $MY_VIM_CONFIG_DIR = $XDG_CONFIG_HOME."/vim"
 let $MY_VIM_STATE_DIR = $XDG_STATE_HOME."/vim"
 
+" set runtimepath
 set runtimepath^=$MY_VIM_CONFIG_DIR
 set runtimepath+=$MY_VIM_DATA_DIR
 set runtimepath+=$MY_VIM_CONFIG_DIR/after
 
+" set directory for Vim8 build-in packages
 set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
 set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
 
-let g:netrw_home = $MY_VIM_DATA_DIR
+let g:netrw_home = $MY_VIM_STATE_DIR
+let g:coc_config_home = $MY_VIM_CONFIG_DIR
 call mkdir($MY_VIM_DATA_DIR."/spell", 'p', 0700)
 
 set backupdir=$MY_VIM_TMP_DIR/backup// | call mkdir(&backupdir, 'p', 0700)
@@ -109,16 +112,6 @@ set modelines=0 " disable modelines for security
 set nomodeline
 set path=.,,** " look for file dir, then current dir, then any current subdir for files
 " }}}
-
-" Directories ---------------------------- {{{
-" let &directory = expand('~/.vim/tmp/swap//')
-" let &backupdir = expand('~/.vim/tmp/backup//')
-" let &undodir = expand('~/.vim/tmp/undo//')
-
-" create directories if they don't exist
-" if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
-" if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
-" if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
 
 set backup
 set writebackup
