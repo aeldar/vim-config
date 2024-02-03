@@ -2,6 +2,43 @@
 source $VIMRUNTIME/defaults.vim
 
 " Settings ------------------------------ {{{settings
+" XDG support {{{
+if empty($MYVIMRC) | let $MYVIMRC = expand('<sfile>:p') | endif
+
+" fallback locations if no XDG
+if empty($XDG_CACHE_HOME)  | let $XDG_CACHE_HOME  = $HOME."/.cache"       | endif
+if empty($XDG_CONFIG_HOME) | let $XDG_CONFIG_HOME = $HOME."/.config"      | endif
+if empty($XDG_DATA_HOME)   | let $XDG_DATA_HOME   = $HOME."/.local/share" | endif
+if empty($XDG_STATE_HOME)  | let $XDG_STATE_HOME  = $HOME."/.local/state" | endif
+
+" some useful directories
+let $MY_VIM_TMP_DIR = $XDG_STATE_HOME."/vim/tmp"
+let $MY_VIM_DATA_DIR = $XDG_DATA_HOME."/vim"
+let $MY_VIM_CONFIG_DIR = $XDG_CONFIG_HOME."/vim"
+let $MY_VIM_STATE_DIR = $XDG_STATE_HOME."/vim"
+
+set runtimepath^=$MY_VIM_CONFIG_DIR
+set runtimepath+=$MY_VIM_DATA_DIR
+set runtimepath+=$MY_VIM_CONFIG_DIR/after
+
+set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
+set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
+
+let g:netrw_home = $MY_VIM_DATA_DIR
+call mkdir($MY_VIM_DATA_DIR."/spell", 'p', 0700)
+
+set backupdir=$MY_VIM_TMP_DIR/backup// | call mkdir(&backupdir, 'p', 0700)
+set directory=$MY_VIM_TMP_DIR/swap//   | call mkdir(&directory, 'p', 0700)
+set undodir=$MY_VIM_TMP_DIR/undo//     | call mkdir(&undodir,   'p', 0700)
+set viewdir=$MY_VIM_TMP_DIR/view//     | call mkdir(&viewdir,   'p', 0700)
+
+set backupskip+=$MY_VIM_TMP_DIR/*
+
+if !has('nvim') " Neovim has its own special location
+  set viminfofile=$MY_VIM_STATE_DIR/viminfo
+endif
+" }}}
+
 " Identation ---------------------------- {{{
 set autoindent
 set smarttab
@@ -74,19 +111,15 @@ set path=.,,** " look for file dir, then current dir, then any current subdir fo
 " }}}
 
 " Directories ---------------------------- {{{
-let &directory = expand('~/.vim/tmp/swap//')
-" set directory^=~/.vim/tmp/swap//
-let &backupdir = expand('~/.vim/tmp/backup//')
-" set backupdir^=~/.vim/tmp/backup//
-let &undodir = expand('~/.vim/tmp/undo//')
-" set undodir^=~/.vim/tmp//undo//
+" let &directory = expand('~/.vim/tmp/swap//')
+" let &backupdir = expand('~/.vim/tmp/backup//')
+" let &undodir = expand('~/.vim/tmp/undo//')
 
 " create directories if they don't exist
-if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
-if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
-if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
+" if !isdirectory(&directory) | call mkdir(&directory, "p") | endif
+" if !isdirectory(&backupdir) | call mkdir(&backupdir, "p") | endif
+" if !isdirectory(&undodir) | call mkdir(&undodir, "p") | endif
 
-set backupskip+=~/.vim/tmp/*
 set backup
 set writebackup
 set undofile
@@ -132,8 +165,9 @@ augroup END
 " }}}
 
 " Install vim-plug if not found ---------------------- {{{
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+
+if empty(glob($MY_VIM_DATA_DIR.'/autoload/plug.vim'))
+  silent !curl -fLo $MY_VIM_DATA_DIR/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 " }}}
@@ -149,7 +183,7 @@ augroup END
 " }}}
 
 " vim-plug plugins ----------------------------------- {{{
-call plug#begin('~/.vim/plugged')
+call plug#begin(expand($MY_VIM_DATA_DIR.'/plugged'))
 Plug 'tpope/vim-sensible'
 Plug 'guns/xterm-color-table.vim'
 Plug 'junegunn/vim-easy-align'
@@ -229,6 +263,8 @@ nmap <leader>rn <Plug>(coc-rename)
 " Formatting selected code.
 xmap <leader>f <Plug>(coc-format-selected)
 nmap <leader>f <Plug>(coc-format-selected)
+" Format current buffer.
+nmap <leader>ff <Plug>(coc-format)
 " Show all diagnostics.
 nnoremap <silent><nowait> <space>a :<C-u>CocList diagnostics<cr>
 " Manage extensions.
@@ -245,6 +281,15 @@ nnoremap <silent><nowait> <space>j :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>"
+
+" Add `:Format` command to format current buffer
+command! -nargs=0 Format :call CocActionAsync('format')
+
+" Add `:Fold` command to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 
 augroup my_coc
   " Highlight the symbol and its references when holding the cursor.
