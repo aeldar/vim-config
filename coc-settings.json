@@ -13,6 +13,7 @@
           "formattingProvider": "ormolu",
           "plugin": {
             "stan": { "globalOn": true }
+          , "rename": { "config": { "crossModule": true } }
           }
         }
       }
