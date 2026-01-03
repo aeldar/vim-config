@@ -22,6 +22,8 @@ set runtimepath^=$MY_VIM_CONFIG_DIR
 set runtimepath+=$MY_VIM_DATA_DIR
 set runtimepath+=$MY_VIM_CONFIG_DIR/after
 
+" Fix. Set directory for a custom build of vim inside /usr/local space
+set packpath^=/usr/local/share/vim/vim91
 " set directory for Vim8 build-in packages
 set packpath^=$XDG_DATA_HOME/vim,$XDG_CONFIG_HOME/vim
 set packpath+=$XDG_CONFIG_HOME/vim/after,$XDG_DATA_HOME/vim/after
@@ -142,6 +144,8 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " }}}
 
 " File browsing (netrw) ------------------------------ {{{
+" Load netrw before configuring it (actual for modern vim, as became optional)
+packadd! netrw
 let g:netrw_banner=0        " disable annoying banner
 let g:netrw_browse_split=4  " open in prior window
 let g:netrw_altv=1          " open splits to the right
