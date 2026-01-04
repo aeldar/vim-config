@@ -137,6 +137,11 @@ nnoremap <Left> :echo "\<Left\> in NORMAL mode has been disabled to develope a g
 nnoremap <Right> :echo "\<Right\> in NORMAL mode has been disabled to develope a good habit. Use l instead."<CR>
 nnoremap <Up> :echo "\<Up\> in NORMAL mode has been disabled to develope a good habit. Use k instead."<CR>
 nnoremap <Down> :echo "\<Down\> in NORMAL mode has been disabled to develope a good habit. Use j instead."<CR>
+" add movements while in the insert mode
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 " open and apply vimrc configuration
 nnoremap <leader>ev :tabedit $MYVIMRC<cr>
